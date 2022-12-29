@@ -31,19 +31,21 @@ def fillField(ex1_name, ex1_sheet_name, ex1_primary_field, ex1_record_field, ex2
     path1 = os.path.join(currentPath, ex1_name)
     path2 = os.path.join(currentPath, ex2_name)
 
-    ex1 = pd.read_excel(path1,index_col=0,sheet_name=ex1_sheet_name)
+    ex1 = pd.read_excel(path1,sheet_name=ex1_sheet_name)
 
     Dict = dict()
     for a,b in zip(ex1[ex1_primary_field], ex1[ex1_record_field]):
         if not pd.isna(b):
             Dict[a] = b
 
-    ex2 = pd.read_excel(path2,index_col=0,sheet_name=ex2_sheet_name)
+    ex2 = pd.read_excel(path2,sheet_name=ex2_sheet_name)
+    # test = ex2['姓名']
 
     miss_field_column_index = ex2.columns.get_loc(ex2_miss_field)  # 根据列字段获得列字段对应的是第几列 例如：'联系电话'是第五列 column_index=5
 
     num_miss = 0  #统计缺失值
     num_supplement = 0  # 统计补充条数
+
     for index, (a, b) in enumerate(zip(ex2[ex2_primary_field], ex2[ex2_miss_field])):
         if pd.isnull(b):
             num_miss += 1
@@ -74,3 +76,4 @@ ex2_miss_field = '联系电话'
 save_ex_name = "output/example.xlsx"
 save_ex_sheet_name = 'new_sheet_name'
 fillField(ex1_name, ex1_sheet_name, ex1_primary_field, ex1_record_field, ex2_name, ex2_sheet_name, ex2_primary_field, ex2_miss_field)
+

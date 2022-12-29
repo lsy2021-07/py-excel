@@ -6,7 +6,6 @@ change：
 
 import os
 import pandas as pd
-
 currentPath = os.path.dirname(__file__)  #返回当前文件所在的路径
 
 def fillField(ex1_name, ex1_primary_field, ex1_record_field, ex2_name, ex2_primary_field, ex2_miss_field, ex1_sheet_name='Sheet1', ex2_sheet_name='Sheet1'):
@@ -25,7 +24,7 @@ def fillField(ex1_name, ex1_primary_field, ex1_record_field, ex2_name, ex2_prima
     path1 = os.path.join(currentPath, ex1_name)
     path2 = os.path.join(currentPath, ex2_name)
 
-    ex1 = pd.read_excel(path1,index_col=0,sheet_name=ex1_sheet_name)
+    ex1 = pd.read_excel(path1,sheet_name=ex1_sheet_name)
     Dict = dict()
 
     for a,(index_ex1,b) in zip(ex1[ex1_primary_field], ex1[ex1_record_field].iterrows()):
@@ -33,7 +32,7 @@ def fillField(ex1_name, ex1_primary_field, ex1_record_field, ex2_name, ex2_prima
             # print(b)
             Dict[a] = b
 
-    ex2 = pd.read_excel(path2,index_col=0,sheet_name=ex2_sheet_name)
+    ex2 = pd.read_excel(path2,sheet_name=ex2_sheet_name)
 
     miss_field_column_index = [ex2.columns.get_loc(column) for column in ex2_miss_field]# 根据列字段获得列字段对应的是第几列 例如：'联系电话'是第五列 column_index=5
     num_miss = 0  #统计缺失值
